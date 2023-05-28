@@ -10,9 +10,8 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
+      - name: Setup Python
       - uses: https://github.com/actions/setup-python@v4
-        with:
-          python-version: 3.11
 
       - name: Install dependencies
         run: |
