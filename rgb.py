@@ -15,7 +15,6 @@ def colorWipe(strip, color, wait_ms=50):
         time.sleep(wait_ms / 1000.0)
 
 
-
 if __name__ == "__main__":
     TOTAL_LED_COUNT = 24
     R = 0
