@@ -45,6 +45,7 @@ if __name__ == "__main__":
         while True:
             data = connection.recv(1024)
             if not data:
+                # connection lost, reestablish connection
                 connection, client_address = server.accept()
                 continue
             rgb = data.decode()
