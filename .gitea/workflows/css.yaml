@@ -1,0 +1,21 @@
+name: CSS Linter
+run-name: ${{ gitea.actor }} is running stylelint
+on: [push]
+
+jobs:
+  CSS-Lint:
+    runs-on: ubuntu-22.04
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+
+      - name: Install dependencies
+        run: |
+          npm install stylelint stylelint-config-standard
+          npm init stylelint
+
+      - name: Run checking
+        run: |
+          npx stylelint "**/*.css"
