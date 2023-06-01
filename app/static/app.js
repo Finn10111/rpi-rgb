@@ -1,9 +1,7 @@
 document.addEventListener("DOMContentLoaded", () => {
 
   document.querySelectorAll("a.color").forEach(button => {
-    button.addEventListener("click", event => {
-      console.log("button");
-      console.log(button.dataset.color);
+    button.addEventListener("click", () => {
       fetch("/color/" + button.dataset.color, {method: "POST"});
     });
   });
