@@ -1,32 +1,23 @@
-from flask import Flask, render_template
-import socket
-import os
-import json
+from flask import Flask
+from config import config
 
 app = Flask(__name__)
 
 
-@app.route('/')
-def index():
-    return render_template('index.html')
+def create_app(config_name):
+    app = Flask(__name__)
+    from .index import index_blueprint
+    from .color import color_blueprint
+    app.register_blueprint(index_blueprint)
+    app.register_blueprint(color_blueprint)
+    app.config.from_object(config[config_name])
+    config[config_name].init_app(app)
 
+    @app.cli.command()
+    def test():
+        """Run the unit tests."""
+        import unittest
+        tests = unittest.TestLoader().discover('tests')
+        unittest.TextTestRunner(verbosity=2).run(tests)
 
-@app.route('/color/<color>', methods=['POST'])
-def color(color):
-    socket_path = '/var/www/vhosts/rgb.local/rgb_socket'
-    if os.path.exists(socket_path):
-        client = socket.socket(socket.AF_UNIX, socket.SOCK_STREAM)
-        client.connect(socket_path)
-        client.sendall(color.encode())
-        client.close()
-        return (json.dumps({'success': True}),
-                200,
-                {'ContentType': 'application/json'})
-    else:
-        return (json.dumps({'success': False}),
-                500,
-                {'ContentType': 'application/json'})
-
-
-if __name__ == "__main__":
-    app.run()
+    return app
