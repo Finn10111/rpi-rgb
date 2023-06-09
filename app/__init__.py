@@ -1,10 +1,8 @@
 from flask import Flask
 from config import config
 
-app = Flask(__name__)
 
-
-def create_app(config_name):
+def create_app(config_name='development'):
     app = Flask(__name__)
     from .index import index_blueprint
     from .color import color_blueprint
