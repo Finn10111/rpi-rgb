@@ -3,7 +3,7 @@ run-name: ${{  gitea.actor }} is running PEP8 check
 on: [push]
 
 jobs:
-  Pyhton-PEP8:
+  Python-PEP8:
     runs-on: ubuntu-22.04
 
     steps:
